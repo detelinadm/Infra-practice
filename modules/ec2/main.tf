@@ -1,0 +1,110 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+  
+}
+
+# Key pair based on an existing key
+resource "aws_key_pair" "deployer_key" {
+  key_name   = var.key_name
+  public_key = file(var.public_key_path)
+}
+# Make 1 public server
+resource "aws_instance" "web1"{
+    ami = var.ami_id
+    instance_type = var.instance_type
+    key_name        = aws_key_pair.deployer_key.key_name
+
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+    subnet_id = aws_subnet.PublicSubnet.id
+    associate_public_ip_address = true
+    tags = {
+    Name = "WebServer-1"
+  }
+    }
+
+#Make second public server
+resource "aws_instance" "web2"{
+    
+    subnet_id = aws_subnet.PublicSubnet.id
+    key_name        = aws_key_pair.deployer_key.key_name
+
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+    associate_public_ip_address = true
+     tags = {
+    Name = "WebServer-2"
+  }
+    }
+
+#Make 1 private server for database 
+resource "aws_instance" "web3"{
+    ami = var.ami_id
+    instance_type = var.instance_type
+    subnet_id = aws_subnet.PrivateSubnet.id
+     tags = {
+    Name = "WebServer-3"
+  }
+    }
+
+resource "aws_security_group" "web_sg" {
+    name = "web_sg"
+    description = "Security group for web server"
+    vpc_id = aws_vpc.myvpc.id
+      # Conditionally add SSH ingress rules for each trusted IP
+  dynamic "ingress" {
+    for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables
+    content {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]  # Allow SSH only from these IPs
+    }
+  }
+
+      # Conditionally add HTTP ingress rules
+  dynamic "ingress" {
+    for_each = length(var.restrict_ips_for_http) > 0 ? var.restrict_ips_for_http : ["0.0.0.0/0"]
+    content {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
+  }
+
+  
+}
+
+resource "aws_security_group" "db_sg" {
+    name = "db_sg"
+    description = "Security group for Database Server"
+    vpc_id = aws_vpc.myvpc.id
+    # Allow PostgreSQL (5432) traffic only from web servers
+  ingress {
+    from_port       = 5432  
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web_sg.id]  # Only allow web servers that are in that security group to have access
+  }
+
+  # Allow all outbound traffic 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1" # Allows all outbound traffic
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "DatabaseSecurityGroup"
+  }
+    
+}
