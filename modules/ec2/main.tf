@@ -97,9 +97,9 @@ resource "aws_security_group" "db_sg" {
 
   # Allow all outbound traffic 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1" # Allows all outbound traffic
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp" # Allows all outbound traffic
     cidr_blocks = ["0.0.0.0/0"]
   }
 

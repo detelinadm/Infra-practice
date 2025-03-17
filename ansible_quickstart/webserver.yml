@@ -1,0 +1,14 @@
+- name: Install and Configure Apache
+  hosts: webservers
+  become: yes #Run as root
+  tasks:
+    - name: Install Apache
+      apt: #Linux package menager
+        name: Apache
+        state: present
+
+    - name: Start Apache
+      service:
+        name: Apache
+        state: started
+        enabled: yes #Start on boot
