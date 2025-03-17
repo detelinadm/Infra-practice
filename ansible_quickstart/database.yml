@@ -1,14 +1,29 @@
 - name: Install and Configure PostgreSQL
-  hosts: dbserver
+  hosts: dbservers
   become: yes
   tasks:
     - name: Install PostgreSQL
-      apt:
+      ansible.builtin.apt:
         name: postgresql
         state: present
+        update_cache: yes
 
-    - name: Ensure PostgreSQL is running
-      service: #Ensure it is running
+    - name: Start Postgresql
+      ansible.builtin.service: #Ensure it is running
         name: postgresql
         state: started
         enabled: yes
+
+    - name: Create Database
+      community.postgresql.postgresql_db:
+        name: flaskdb
+        login_user: postgres
+
+    - name: Create User
+      community.postgresql.postgresql_user:
+        db: flaskdb
+        name: flaskuser
+        password: 1234
+        login_user: postgres
+
+
