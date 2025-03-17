@@ -26,4 +26,12 @@
         password: 1234
         login_user: postgres
 
+    - name: Ensure Data Directory is Persisted
+      ansible.builtin.file:
+        path: /var/lib/postgresql/data
+        state: directory
+        owner: postgres
+        group: postgres
+        mode: 0700 #DONT UNDERSTAND
+
 
