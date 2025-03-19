@@ -1,4 +1,4 @@
-resource "aws_lb" "Load Balancer"{
+resource "aws_lb" "aws_lb"{
    name = "aws_lb"
    load_balancer_type = "default"
    internal = false
