@@ -67,6 +67,13 @@ resource "aws_security_group" "web_sg" {
       protocol    = "tcp"
       cidr_blocks = [ingress.value]  # Allow SSH only from these IPs
     }
+    
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
       # Conditionally add HTTP ingress rules
@@ -78,7 +85,9 @@ resource "aws_security_group" "web_sg" {
       protocol    = "tcp"
       cidr_blocks = [ingress.value]
     }
+    
   }
+  
 
   
 }
@@ -95,13 +104,6 @@ resource "aws_security_group" "db_sg" {
     security_groups = [aws_security_group.web_sg.id]  # Only allow web servers that are in that security group to have access
   }
 
-  # Allow all outbound traffic 
-  egress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp" # Allows all outbound traffic
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   tags = {
     Name = "DatabaseSecurityGroup"
