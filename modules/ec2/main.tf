@@ -25,7 +25,7 @@ resource "aws_instance" "web1"{
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-      associate_public_ip_address = true
+    associate_public_ip_address = true
     tags = {
     Name = "WebServer-1"
   }
@@ -33,6 +33,8 @@ resource "aws_instance" "web1"{
 
 #Make second public server
 resource "aws_instance" "web2"{
+  ami = var.ami_id
+  instance_type = var.instance_type
     
     subnet_id = var.public_subnet_id
     key_name        = aws_key_pair.deployer_key.key_name
@@ -57,7 +59,7 @@ resource "aws_instance" "web3"{
 resource "aws_security_group" "web_sg" {
     name = "web_sg"
     description = "Security group for web server"
-    vpc_id = var.vpc_id #my vpc
+    vpc_id = var.vpc_id.id #my vpc
       # Conditionally add SSH ingress rules for each trusted IP
   dynamic "ingress" {
     for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables
@@ -95,7 +97,7 @@ resource "aws_security_group" "web_sg" {
 resource "aws_security_group" "db_sg" {
     name = "db_sg"
     description = "Security group for Database Server"
-    vpc_id = aws_vpc.myvpc.id
+    vpc_id = var.vpc_id.id
     # Allow PostgreSQL (5432) traffic only from web servers
   ingress {
     from_port       = 5432  

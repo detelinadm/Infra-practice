@@ -1,7 +1,12 @@
-variable "security_groups" {
-  
+variable "vpc_id" {
+  type = string
 }
 
-variable "subnets" {
-  
+variable "public_subnet_ids"{
+    type = list(string)
 }
+
+variable "alb_security_group_ids"{
+    type = string
+}
+

@@ -7,5 +7,8 @@ output "private_subnet_id" {
 }
 
 output "public_subnet_id" {
-  value = aws_subnet.PublicSubnet.id
+  value = aws_subnet.PublicSubnet.id 
+}
+output "vpc_security_group_ids" {
+  value = aws_vpc.myvpc.default_security_group_id # Haven't made a sg so using default
 }
