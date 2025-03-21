@@ -21,11 +21,11 @@ resource "aws_key_pair" "deployer_key" {
 resource "aws_instance" "web1"{
     ami = var.ami_id
     instance_type = var.instance_type
+    subnet_id = var.public_subnet_id
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-    subnet_id = aws_subnet.PublicSubnet.id
-    associate_public_ip_address = true
+      associate_public_ip_address = true
     tags = {
     Name = "WebServer-1"
   }
@@ -34,7 +34,7 @@ resource "aws_instance" "web1"{
 #Make second public server
 resource "aws_instance" "web2"{
     
-    subnet_id = aws_subnet.PublicSubnet.id
+    subnet_id = var.public_subnet_id
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
@@ -48,7 +48,7 @@ resource "aws_instance" "web2"{
 resource "aws_instance" "web3"{
     ami = var.ami_id
     instance_type = var.instance_type
-    subnet_id = aws_subnet.PrivateSubnet.id
+    subnet_id = var.private_subnet_id # create
      tags = {
     Name = "WebServer-3"
   }
@@ -57,7 +57,7 @@ resource "aws_instance" "web3"{
 resource "aws_security_group" "web_sg" {
     name = "web_sg"
     description = "Security group for web server"
-    vpc_id = aws_vpc.myvpc.id
+    vpc_id = var.vpc_id #my vpc
       # Conditionally add SSH ingress rules for each trusted IP
   dynamic "ingress" {
     for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables

@@ -39,3 +39,17 @@ variable "restrict_ips_for_http" {
   type        = list(string)
   default     = []  # Tom lista betyder att ALLA IP-adresser har HTTP access
 }
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "public_subnet_id"{
+  type = string
+}
+variable "private_subnet_id" {
+  type = string
+}
+variable "vpc_security_group_ids" {
+  type = string
+}
