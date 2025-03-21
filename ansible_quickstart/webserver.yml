@@ -22,11 +22,11 @@
 
     - name: Install Python Dependencies
       ansible.builtin.pip:
-        requirements: /home/ubuntu/requirements.txt
+        requirements: /home/ubuntu/requirements.txt # fix path
 
     - name: Copy Flask App
       ansible.builtin.copy:
-        src: /local/path/to/app/
+        src: /local/path/to/app/ # fix path
         dest: /var/www/flask-app/
         owner: ubuntu
         group: ubuntu
