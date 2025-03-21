@@ -22,9 +22,9 @@
     - name: Create User
       community.postgresql.postgresql_user:
         db: flaskdb
-        name: flaskuser
-        password: 1234
-        login_user: postgres
+        name: flaskuser # should be a secret
+        password: 1234 # should be a secret
+        login_user: postgres # should be a secret
 
     - name: Ensure Data Directory is Persisted
       ansible.builtin.file:
