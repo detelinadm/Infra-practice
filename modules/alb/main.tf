@@ -52,7 +52,7 @@ resource "aws_lb_listener" "listener" {
 
 #Attach instances to the target group
 resource "aws_lb_target_group_attachment" "instances" {
-  for_each = toset(var.target_instance_ids)
+  for_each = var.target_instance_ids
 
   target_group_arn = aws_lb_target_group.aws_lb_tg.arn
   target_id = each.value
