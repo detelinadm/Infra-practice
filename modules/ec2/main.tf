@@ -9,10 +9,10 @@ terraform {
 
 
 # Key pair based on an existing key
-#resource "aws_key_pair" "deployer_key" {
- # key_name   = var.key_name
-  #public_key = file(var.public_key_path)
-#}
+resource "aws_key_pair" "deployer_key" {
+ key_name   = var.key_name
+  public_key = file(var.public_key_path)
+}
 # Make 1 public server
 resource "aws_instance" "web1"{
     ami = var.ami_id
