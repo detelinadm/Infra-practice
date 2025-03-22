@@ -41,14 +41,21 @@ variable "restrict_ips_for_http" {
 }
 
 variable "vpc_id" {
+description = "ID of the VPC"
+  type        = string
 }
 
 variable "public_subnet_id"{
-  type = string
+   description = "ID of the public subnet"
+  type        = string
 }
 variable "private_subnet_id" {
-  type = string
+  description = "The ID of the private subnet"
+  type        = string
+  default     = "subnet-0123456789abcdef0"
 }
 variable "vpc_security_group_ids" {
-  type = string
+  description = "List of VPC security group IDs"
+  type        = list(string)
+
 }
