@@ -59,3 +59,7 @@ variable "vpc_security_group_ids" {
   type        = list(string)
 
 }
+variable "ingress_rules" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
