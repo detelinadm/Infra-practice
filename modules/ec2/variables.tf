@@ -41,7 +41,6 @@ variable "restrict_ips_for_http" {
 }
 
 variable "vpc_id" {
-  type = string
 }
 
 variable "public_subnet_id"{

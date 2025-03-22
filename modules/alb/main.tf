@@ -6,7 +6,7 @@ resource "aws_lb" "aws_lb"{
    subnets = var.public_subnet_ids
 
   tags = {
-    Name = "Application Load Balancer"
+    Name = "Application_Load_Balancer"
   }
  }
 
