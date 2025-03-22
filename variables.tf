@@ -16,7 +16,7 @@ variable "key_name" {
 }
 
 variable "public_key_path" {
-  default = "~/.ssh/key.pub"
+  default = "/home/cloudshell-user/.ssh/key.pub"
 }
 
 variable "trusted_ips_for_ssh" {
