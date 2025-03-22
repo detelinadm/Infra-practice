@@ -33,3 +33,5 @@ debug.log
 
 # Windows metadata
 Thumbs.db 
+**/.ssh/key
+**/.ssh/key.pub
