@@ -18,7 +18,7 @@ module "ec2" {
   vpc_id                = module.vpc.vpc_id
   public_subnet_id      = module.vpc.public_subnet_id
   private_subnet_id     = module.vpc.private_subnet_id
-  vpc_security_group_ids = module.vpc.vpc_security_group_ids
+  vpc_security_group_ids = [module.vpc.vpc_security_group_ids]
 
   trusted_ips_for_ssh   = var.trusted_ips_for_ssh
   restrict_ips_for_http = var.restrict_ips_for_http
