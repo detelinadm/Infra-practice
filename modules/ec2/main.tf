@@ -57,14 +57,15 @@ resource "aws_security_group" "web_sg" {
     description = "Security group for web server"
     vpc_id = var.vpc_id#my vpc
       # Conditionally add SSH ingress rules for each trusted IP
-  dynamic "ingress" {
-    for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables
-    content {
+  #dynamic 
+  ingress {
+    #for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables
+    #content {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = [ingress.value]  # Allow SSH only from these IPs
-    }
+      cidr_blocks = var.trusted_ips_for_ssh  # Allow SSH only from these IPs
+    #}
     
   }
   egress {
