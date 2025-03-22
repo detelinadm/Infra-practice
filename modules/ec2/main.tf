@@ -93,7 +93,7 @@ resource "aws_security_group" "web_sg" {
 resource "aws_security_group" "db_sg" {
     name = "db_sg"
     description = "Security group for Database Server"
-    vpc_id = var.vpc_id.id
+    vpc_id = var.vpc_id
     # Allow PostgreSQL (5432) traffic only from web servers
   ingress {
     from_port       = 5432  
