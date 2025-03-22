@@ -12,3 +12,10 @@ output "Web-3-IP-adress"{
     description = "Private IP Adress for Web-3"
     value = aws_instance.web3.private_ip
 }
+output "web1_instance_id" {
+  value = aws_instance.web1.id
+}
+
+output "web2_instance_id" {
+  value = aws_instance.web2.id
+}
