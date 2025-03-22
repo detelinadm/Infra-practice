@@ -13,7 +13,7 @@ resource "aws_subnet" "PublicSubnet"{
   # Make subnet inside a VPC
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.1.0/24"
-  #map_public_ip_on_launch = true # instances launched into the subnet should be assigned a public IP
+  map_public_ip_on_launch = true # instances launched into the subnet should be assigned a public IP
 }
 
 # Create a private subnet
