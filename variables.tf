@@ -28,3 +28,7 @@ variable "restrict_ips_for_http" {
   type    = list(string)
   default = []
 }
+variable "ingress_rules" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
