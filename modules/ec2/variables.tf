@@ -52,7 +52,6 @@ variable "public_subnet_id"{
 variable "private_subnet_id" {
   description = "The ID of the private subnet"
   type        = string
-  default     = "subnet-0123456789abcdef0"
 }
 variable "vpc_security_group_ids" {
   description = "List of VPC security group IDs"

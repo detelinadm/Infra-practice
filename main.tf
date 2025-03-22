@@ -15,6 +15,7 @@ module "ec2" {
   key_name              = var.key_name
   public_key_path       = var.public_key_path
 
+#Using the output from vpc module to input in ec2 variables module
   vpc_id                = module.vpc.vpc_id
   public_subnet_id      = module.vpc.public_subnet_id
   private_subnet_id     = module.vpc.private_subnet_id
