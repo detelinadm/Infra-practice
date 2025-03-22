@@ -1,5 +1,5 @@
 resource "aws_lb" "aws_lb"{
-   name = "aws_lb"
+   name = "aws-lb"
    load_balancer_type = "application"
    internal = false
    security_groups = [aws_security_group.lb_sg.id]
@@ -32,7 +32,7 @@ resource "aws_lb" "aws_lb"{
 
 #Target group
 resource "aws_lb_target_group" "aws_lb_tg" {
-  name     = "target_group"
+  name     = "target-group"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
