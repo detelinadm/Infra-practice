@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-  
-}
 
 # Key pair based on an existing key
 resource "aws_key_pair" "deployer_key" {
@@ -59,7 +55,7 @@ resource "aws_instance" "web3"{
 resource "aws_security_group" "web_sg" {
     name = "web_sg"
     description = "Security group for web server"
-    vpc_id = var.vpc_id.id #my vpc
+    vpc_id = var.vpc_id#my vpc
       # Conditionally add SSH ingress rules for each trusted IP
   dynamic "ingress" {
     for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables
