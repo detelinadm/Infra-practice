@@ -13,11 +13,14 @@ resource "aws_key_pair" "deployer_key" {
  key_name   = var.key_name
   public_key = file(var.public_key_path)
 }
+
+
 # Make 1 public server
 resource "aws_instance" "web1"{
     ami = var.ami_id
+    availability_zone = "us-east-1b"
     instance_type = var.instance_type
-    subnet_id = var.public_subnet_id[0]
+    subnet_id = var.public_subnet_id
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
@@ -30,9 +33,10 @@ resource "aws_instance" "web1"{
 #Make second public server
 resource "aws_instance" "web2"{
   ami = var.ami_id
+  availability_zone = "us-east-1a"
   instance_type = var.instance_type
     
-    subnet_id = var.public_subnet_id[1]
+    subnet_id = var.public_subnet_id
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
@@ -46,7 +50,7 @@ resource "aws_instance" "web2"{
 resource "aws_instance" "web3"{
     ami = var.ami_id
     instance_type = var.instance_type
-    subnet_id = var.private_subnet_id 
+    subnet_id = var.private_subnet_id
      tags = {
     Name = "WebServer-3"
   }
@@ -55,18 +59,18 @@ resource "aws_instance" "web3"{
 resource "aws_security_group" "web_sg" {
     name = "web_sg"
     description = "Security group for web server"
-    vpc_id = var.vpc_id #my vpc
-      # Conditionally add SSH ingress rules for each trusted IP
-  #dynamic 
-  ingress {
-    #for_each = var.trusted_ips_for_ssh  # Loop through each trusted IP will put in variables
-    #content {
+    vpc_id = var.vpc_id 
+    ingress {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
       cidr_blocks = var.trusted_ips_for_ssh  # Allow SSH only from these IPs
-    #}
-    
+  } 
+  ingress {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]    
   }
   egress {
     from_port   = 0
@@ -74,21 +78,8 @@ resource "aws_security_group" "web_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-      # Conditionally add HTTP ingress rules
-  dynamic "ingress" {
-    for_each = length(var.restrict_ips_for_http) > 0 ? var.restrict_ips_for_http : ["0.0.0.0/0"]
-    content {
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = [ingress.value]
-    }
+ 
     
-  }
-  
-
-  
 }
 
 resource "aws_security_group" "db_sg" {
