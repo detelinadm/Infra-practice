@@ -46,7 +46,7 @@ resource "aws_instance" "web2"{
 resource "aws_instance" "web3"{
     ami = var.ami_id
     instance_type = var.instance_type
-    subnet_id = var.private_subnet_id # create
+    subnet_id = var.private_subnet_id 
      tags = {
     Name = "WebServer-3"
   }
@@ -55,7 +55,7 @@ resource "aws_instance" "web3"{
 resource "aws_security_group" "web_sg" {
     name = "web_sg"
     description = "Security group for web server"
-    vpc_id = var.vpc_id#my vpc
+    vpc_id = var.vpc_id #my vpc
       # Conditionally add SSH ingress rules for each trusted IP
   #dynamic 
   ingress {

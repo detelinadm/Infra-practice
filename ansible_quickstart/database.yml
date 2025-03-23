@@ -16,8 +16,8 @@
 
     - name: Create Database
       community.postgresql.postgresql_db:
-        name: flaskdb
-        login_user: postgres
+        name: flaskdb #should be a secret
+        login_user: postgres #secret no hardcoding
 
     - name: Create User
       community.postgresql.postgresql_user:

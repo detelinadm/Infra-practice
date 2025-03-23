@@ -1,0 +1,50 @@
+- name: Install Apache Server
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Required Packages
+      ansible.builtin.apt:
+        name:
+          - apache2
+          - libapache2-mod-wsgi-py3
+          - python3
+          - python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Install Python Dependencies
+      ansible.builtin.pip:
+        requirements: /home/ubuntu/requirements.txt
+
+    - name: Start and activate Apache at start
+      ansible.builtin.service:
+        name: apache2 #httpd for redhat/centOS
+        state: started
+        enabled: true
+
+    - name: Check that Apache is running
+      ansible.builtin.command: systemctl is-active httpd
+      register: apache_status
+      changed_when: false
+      failed_when: "'active' not in apache_status.stdout"
+
+    - name: Check that website answers
+      ansible.builtin.uri:
+        url: http://localhost
+        status_code: 200
+
+    - name: Copy app.py
+      ansible.builtin.copy:
+        src: ../app.py
+        dest: /home/ubuntu/app.py
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755' # file permission. executable by owner and readable by others
+
+    - name: Copy .env 
+      ansible.builtin.copy:
+        src: ../.env
+        dest: /home/ubuntu/.env
+        mode: '0600' # only owner can read/write (no access to others)
+
+  
