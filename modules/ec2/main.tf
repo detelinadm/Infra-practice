@@ -18,7 +18,6 @@ resource "aws_key_pair" "deployer_key" {
 # Make 1 public server
 resource "aws_instance" "web1"{
     ami = var.ami_id
-    availability_zone = "us-east-1b"
     instance_type = var.instance_type
     subnet_id = var.public_subnet_id
     key_name        = aws_key_pair.deployer_key.key_name
@@ -33,7 +32,6 @@ resource "aws_instance" "web1"{
 #Make second public server
 resource "aws_instance" "web2"{
   ami = var.ami_id
-  availability_zone = "us-east-1a"
   instance_type = var.instance_type
     
     subnet_id = var.public_subnet_id
