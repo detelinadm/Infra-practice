@@ -11,7 +11,7 @@ data "aws_availability_zones" "available" {
 } 
 
 
-resource "aws_subnet" "PublicSubnet1"{
+resource "aws_subnet" "PublicSubnet"{
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "us-east-1a" 
@@ -19,16 +19,6 @@ resource "aws_subnet" "PublicSubnet1"{
 
   tags = {
     Name = "PublicSubnet1"
-  }
-}
-resource "aws_subnet" "PublicSubnet2"{
-  vpc_id = aws_vpc.myvpc.id
-  cidr_block = "10.0.1.0/24"
-  availability_zone = "us-east-1b" 
-  map_public_ip_on_launch = true # instances launched into the subnet should be assigned a public IP
-
-  tags = {
-    Name = "PublicSubnet2"
   }
 }
 
@@ -56,7 +46,7 @@ resource "aws_route_table" "PublicRT"{
 
 #Create a route table association to connect the route table to the public subnet
 resource "aws_route_table_association" "PublicRTassociation" {
-  subnet_id = aws_subnet.PublicSubnet1.id
+  subnet_id = aws_subnet.PublicSubnet.id
   route_table_id = aws_route_table.PublicRT.id
 }
 
