@@ -1,6 +1,6 @@
 #!/bin/bash
 
-chmod+x ansible-playbook.sh
+
 
 set -o nounset -o pipefail -o errexit
 
