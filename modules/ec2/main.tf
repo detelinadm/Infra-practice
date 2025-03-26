@@ -19,7 +19,7 @@ resource "aws_key_pair" "deployer_key" {
 resource "aws_instance" "web1"{
     ami = var.ami_id
     instance_type = var.instance_type
-    subnet_id = var.public_subnet1_id.id
+    subnet_id = var.public_subnet1_id
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
@@ -34,7 +34,7 @@ resource "aws_instance" "web2"{
   ami = var.ami_id
   instance_type = var.instance_type
     
-    subnet_id = var.public_subnet2_id.id
+    subnet_id = var.public_subnet2_id
     key_name        = aws_key_pair.deployer_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
