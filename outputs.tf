@@ -1,6 +1,9 @@
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
+output "cidr_block" {
+  value = aws_vpc.myvpc.cidr_block
+}
 
 output "public_subnet1_id" {
   value = module.vpc.public_subnet1_id

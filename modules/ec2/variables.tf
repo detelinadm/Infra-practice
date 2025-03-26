@@ -66,3 +66,8 @@ variable "ingress_rules" {
   type    = list(string)
   default = ["0.0.0.0/0"]
 }
+
+variable "vpc_cidr" {
+  description = "The CIDR block of the VPC."
+  type        = string
+}
