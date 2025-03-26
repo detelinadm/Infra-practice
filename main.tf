@@ -32,7 +32,8 @@ module "ec2" {
    
    source = "./modules/alb"
    vpc_id             = module.vpc.vpc_id
-   public_subnet_ids  = module.vpc.public_subnet_ids # or public_subnet_ids if you switch to a list output
+   public_subnet1_id  = module.vpc.public_subnet1_id
+   public_subnet2_id = module.vpc.public_subnet2_id # or public_subnet_ids if you switch to a list output
    target_instance_ids = { # this is a map instead of a list
      web1 = module.ec2.web1_instance_id
      web2 = module.ec2.web2_instance_id}
