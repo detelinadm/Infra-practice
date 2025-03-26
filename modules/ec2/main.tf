@@ -105,12 +105,12 @@ resource "aws_security_group" "db_sg" {
   security_groups = [aws_security_group.web_sg.id]  # Only allow SSH from your web tier
 }
 
- #egress {
-  #  from_port   = 0
-   # to_port     = 0
-    #protocol    = "-1"
-    #idr_blocks = [modules.vpc.cidr_block] 
-  #}
+   egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
 
 
