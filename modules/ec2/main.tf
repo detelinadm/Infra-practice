@@ -109,7 +109,7 @@ resource "aws_security_group" "db_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [aws_vpc.myvpc.cidr_block] 
+    cidr_blocks = [module.vpc.cidr_block] 
   }
 
 
