@@ -14,7 +14,7 @@ data "aws_availability_zones" "available" {
 resource "aws_subnet" "PublicSubnet1"{
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.1.0/24"
-  #availability_zone = "us-east-1a" 
+  availability_zone = "us-east-1a" 
   map_public_ip_on_launch = true # instances launched into the subnet should be assigned a public IP
 
   tags = {
@@ -25,7 +25,7 @@ resource "aws_subnet" "PublicSubnet1"{
 resource "aws_subnet" "PublicSubnet2"{
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.2.0/24"
-  #availability_zone = "us-east-1b" 
+  availability_zone = "us-east-1b" 
   map_public_ip_on_launch = true # instances launched into the subnet should be assigned a public IP
 
   tags = {
