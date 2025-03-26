@@ -91,6 +91,13 @@ resource "aws_security_group" "db_sg" {
     protocol        = "tcp"
     security_groups = [aws_security_group.web_sg.id]  # Only allow web servers that are in that security group to have access
   }
+  ingress {
+  from_port       = 22
+  to_port         = 22
+  protocol        = "tcp"
+  security_groups = [aws_security_group.web_sg.id]  # Only allow SSH from your web tier
+}
+
 
 
   tags = {
