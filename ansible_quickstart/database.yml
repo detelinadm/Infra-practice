@@ -1,8 +1,5 @@
 ---
-- name: Initialize PostgreSQL database (Amazon Linux)
-  command: /usr/bin/postgresql-setup initdb
-  args:
-    creates: /var/lib/pgsql/data/pg_hba.conf
+
 
 - name: Setup PostgreSQL Database
   hosts: dbserver
@@ -12,6 +9,11 @@
     db_user: '{{ lookup("env", "DB_USER") }}'
     db_password: '{{ lookup("env", "DB_PASSWORD") }}'
   tasks:
+    - name: Initialize PostgreSQL database (Amazon Linux)
+      command: /usr/bin/postgresql-setup initdb
+      args:
+      creates: /var/lib/pgsql/data/pg_hba.conf
+    
     - name: Install PostgreSQL
       yum:
         name: postgresql
