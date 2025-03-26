@@ -1,0 +1,85 @@
+
+#install for webs:
+#        1,python3, pip3
+#        2,pip install flask
+#        3,upload flask app code
+#        4,configure systemd to keep app run backgroud
+
+#install for db:
+#         1,install postgresql
+#         2, creat db and ub user
+#         3,open port 5432 for web_sg
+
+- name: configure web servers
+  hosts: web
+  become: true
+  tasks:
+    - name: Install python3 and pip
+      dnf:
+        name:
+          - python3
+          - python3-pip
+        state: present
+
+    - name: install flask and gunicorn
+      pip:
+        name: 
+          - flask
+          - gunicorn
+          - psycopg2-binary
+
+    - name: create flask app directory
+      file:
+        path: /opt/flask_app/
+        state: directory
+        mode: '0755'
+
+    - name: upload the flask app
+      copy:
+        src: ./app.py
+        dest: /opt/flask_app/
+        mode: '0755'
+
+    - name: copy gunicorn systemd file
+      template:
+        src: ./systemd
+        dest: /etc/systemd/system/gunicorn_flask.service
+
+    - name: reload systemd
+      shell: systemctl daemon-reload
+
+    - name: start systemd
+      systemd:
+        name: gunicorn_flask
+        enabled: yes
+        state: started
+
+- name: configure db
+  hosts: db
+  become: true
+  tasks:
+    - name: install postgresql
+      dnf:
+        name:
+          - postgresql-server
+          - postgresql-contrib
+        state: present
+
+    - name: initialize postgres db
+      command: /usr/bin/postgresql-setup initdb
+      args:
+        creates: /var/lib/pgsql/data/pg_hba.conf
+
+    - name: enable and start db
+      systemd:
+        name: postgres
+        enabled: yes
+        state: started
+
+    - name: Set password for postgres user
+      become_user: postgres
+      shell: psql -c "ALTER USER postgres WITH PASSWORD 'password';"
+      args:
+        executable: /bin/bash
+
+    
