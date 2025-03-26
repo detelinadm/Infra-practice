@@ -2,7 +2,7 @@
 
 
 - name: Setup PostgreSQL Database
-  hosts: dbserver
+  hosts: dbservers
   become: yes
   vars:
     db_name: '{{ lookup("env", "DB_NAME") }}'
@@ -12,7 +12,7 @@
     - name: Initialize PostgreSQL database (Amazon Linux)
       command: /usr/bin/postgresql-setup initdb
       args:
-      creates: /var/lib/pgsql/data/pg_hba.conf
+        creates: /var/lib/pgsql/data/pg_hba.conf
     
     - name: Install PostgreSQL
       yum:
