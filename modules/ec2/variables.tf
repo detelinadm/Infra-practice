@@ -31,7 +31,6 @@ variable "public_key_path" {
 variable "trusted_ips_for_ssh" {
   description = "Lista av IP-adresser som släpps in till SSH (glöm inte /32)"
   type        = list(string)
-  default     = []  # Tom lista betyder att INGA IP-adresser har SSH access
 }
 
 variable "restrict_ips_for_http" {
