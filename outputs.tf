@@ -30,3 +30,6 @@ output "web3_private_ip" {
   value = module.ec2.Web-3-IP-adress
 }
 
+output "route_table_id" {
+  value = module.vpc.aws_route_table.PrivateRT.id
+}

@@ -24,3 +24,7 @@ output "private_route_table_id" {
 output "public_subnet_id_for_nat" {
   value = aws_subnet.PublicSubnet1.id
 }
+
+output "route_table_id" {
+  value = aws_route_table.PrivateRT.id
+}
