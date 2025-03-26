@@ -48,7 +48,7 @@ resource "aws_nat_gateway" "nat" {
 }
 
 resource "aws_route" "private_nat" {
-  route_table_id = module.vpc.route_table_id
+  route_table_id = module.vpc.private_route_table_id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.nat.id
 }
