@@ -32,7 +32,7 @@ resource "aws_lb" "aws_lb"{
  
  #Target group
  resource "aws_lb_target_group" "aws_lb_tg" {
-   name     = "t-group"
+   name     = "targ-group"
    target_type = "instance"
    port     = 80
    protocol = "HTTP"
