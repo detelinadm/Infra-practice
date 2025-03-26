@@ -7,7 +7,7 @@ source "$(dirname "$0")/ansible_quickstart/.env"
 set +o allexport
 
 # Run database playbook
-ansible-playbook -i inventory ansible_quickstart/database.yml "$@"
+ansible-playbook -i ansible_quickstart/inventory ansible_quickstart/database.yml "$@"
 
 # Run webserver playbook 
-ansible-playbook -i inventory ansible_quickstart/webserver.yml "$@"
+ansible-playbook -i ansible_quickstart/inventory ansible_quickstart/webserver.yml "$@"
