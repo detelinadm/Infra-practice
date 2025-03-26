@@ -56,10 +56,17 @@ resource "aws_route_table" "PublicRT"{
 }
 
 #Create a route table association to connect the route table to the public subnet
-resource "aws_route_table_association" "PublicRTassociation" {
-  subnet_id = [aws_subnet.PublicSubnet1.id, aws_subnet.PublicSubnet2.id]
+resource "aws_route_table_association" "Public1" {
+  subnet_id = aws_subnet.PublicSubnet1.id
   route_table_id = aws_route_table.PublicRT.id
 }
+
+
+resource "aws_route_table_association" "Public2" {
+  subnet_id =  aws_subnet.PublicSubnet2.id
+  route_table_id = aws_route_table.PublicRT.id
+}
+
 
 resource "aws_route_table" "PrivateRT" {
   vpc_id = aws_vpc.myvpc.id
