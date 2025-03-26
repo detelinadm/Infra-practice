@@ -8,16 +8,17 @@
         - Flask
         - gunicorn
         - psycopg2-binary
+        - python-dotenv
 
     - name: Upload Flask App
       copy:
-        src: ../app
+        src: ./app.py
         dest: /opt/flask_app/
         mode: 0755
 
     - name: Copy gunicorn systemd file
       template:
-        src: ./systemd
+        src: ./ansible_quickstart/systemd
         dest: /etc/systemd/system/gunicorn_flask.service
 
     - name: Reload systemd

@@ -25,3 +25,14 @@ module "ec2" {
   restrict_ips_for_http = var.restrict_ips_for_http
 }
 
+
+
+ module "alb" {
+   
+   source = "./modules/alb"
+   vpc_id             = module.vpc.vpc_id
+   public_subnet_ids  = [module.vpc.public_subnet_ids] # or public_subnet_ids if you switch to a list output
+   target_instance_ids = { # this is a map instead of a list
+     web1 = module.ec2.web1_instance_id
+     web2 = module.ec2.web2_instance_id}
+ }
