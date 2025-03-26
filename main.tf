@@ -38,3 +38,18 @@ module "ec2" {
      web1 = module.ec2.web1_instance_id
      web2 = module.ec2.web2_instance_id}
  }
+
+resource "aws_eip" "nat_eip" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id = aws_subnet.PublicSubnet1.id
+}
+
+resource "aws_route" "private_nat" {
+  route_table_id = aws_route_table.PrivateRT.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.nat.id
+}

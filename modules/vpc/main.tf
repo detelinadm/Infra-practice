@@ -79,3 +79,5 @@ resource "aws_route_table_association" "PrivateRTassociation" {
   subnet_id = aws_subnet.PrivateSubnet.id
   route_table_id = aws_route_table.PrivateRT.id
 }
+
+

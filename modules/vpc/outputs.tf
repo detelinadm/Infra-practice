@@ -16,3 +16,11 @@ output "public_subnet2_id" {
 output "vpc_security_group_ids" {
   value = aws_vpc.myvpc.default_security_group_id # Haven't made a sg so using default
 }
+
+output "private_route_table_id" {
+  value = aws_route_table.PrivateRT.id
+}
+
+output "public_subnet_id_for_nat" {
+  value = aws_subnet.PublicSubnet1.id
+}
