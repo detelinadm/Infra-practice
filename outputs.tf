@@ -31,5 +31,5 @@ output "web3_private_ip" {
 }
 
 output "route_table_id" {
-  value = module.vpc.aws_route_table.PrivateRT.id
+  value = module.vpc.private_route_table_id
 }
