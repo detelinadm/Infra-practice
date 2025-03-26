@@ -36,5 +36,6 @@ variable "ingress_rules" {
 variable "vpc_cidr" {
   description = "The CIDR block of the VPC."
   type        = string
+  default = "10.0.0.0/16"
 }
 
