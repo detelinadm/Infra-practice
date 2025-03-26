@@ -17,7 +17,6 @@ module "ec2" {
 
 #Using the output from vpc module to input in ec2 variables module
   vpc_id                = module.vpc.vpc_id
-  vpc_cidr = module.vpc.cidr_block.id
   public_subnet1_id      = module.vpc.public_subnet1_id
   public_subnet2_id      = module.vpc.public_subnet2_id
   private_subnet_id     = module.vpc.private_subnet_id

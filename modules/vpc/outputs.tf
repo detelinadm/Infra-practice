@@ -1,10 +1,6 @@
 output "vpc_id" {
   value = aws_vpc.myvpc.id
 }
-output "cidr_block" {
-  value = aws_vpc.myvpc.cidr_block
-}
-
 
 output "private_subnet_id" {
   value = aws_subnet.PrivateSubnet.id
